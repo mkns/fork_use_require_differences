@@ -1,0 +1,23 @@
+#!/usr/bin/perl -w
+
+use strict;
+use Library;
+
+$SIG{'CHLD'} = "wait_for_child_to_die";
+while ( my $in = <STDIN> ) {
+  if ( my $pid = fork ) {
+    # parent
+  } else {
+    child();
+  }
+}
+
+sub child {
+  print "This is the child\n";
+  Library::foo();
+  exit 0;
+}
+
+sub wait_for_child_to_die {
+  wait;
+}

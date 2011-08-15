@@ -1,0 +1,31 @@
+This package shows the difference between use and require when you
+have a script or process that spawns children which then use a
+library.  The point of the exercise is to show that a library that is
+'require'd can be changed without the parent process needing to be
+restarted to pick up said changes, while a library that is being
+'use'd won't have any changes picked up until the process using it is
+restarted.  For many cases, this is irrelevant, but if you have a
+parent process that lives a long time, say for many days or weeks, and
+you need or want to make changes to the libraries used by that process
+without having to restart the parent, one option is to require the
+library in a manner shown in the scripts.
+
+To see how this works, get two terminals open, one to run one of the
+scripts and another to edit the library (conveniently named
+Library.pm).  First, run the ./require script and while it is running,
+hit the enter keyboard and you'll see some output from the Library.
+Then, in the other window, edit Library.pm and once you have saved the
+change you made, come back to the first window where you have the
+./require script running and WITHOUT RESTARTING the script, hit enter
+again, and you'll see the output has indeed changed without you
+needing to restart the script.  Now cancel the ./require script from
+running (CTRL-C should do the trick) and this time, run the ./use
+script and hit enter a few times to see the output from Library.  Now
+go and change the Library, save the changes, go back to the terminal
+running the ./use script, hit enter a few times and you'll see that
+the output hasn't changed.  The only way to get the ./use script to
+pick up the change is to restart it.
+
+This isn't a bug or news to anyone who knows Perl - it's just showing
+a really simple example of one of the handy differences between use
+and require.
